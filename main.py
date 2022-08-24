@@ -1,14 +1,18 @@
 from tkinter import *
 import math
+import pandas as pd
+import random
 
-# Utilizar api para chamar palavras
-# mostrar as palavras
-# aceitar um input para as letras do jogador
-# contar as letras certas e os erros
+# contar as letras certas e os erros e dividir pelos segundos decorridos (atualizando)
 # finalizar o contador
 
-# ------------- CODE FOR TIMER ------------
+# ------------- IMPORT WORD LIST ----------
+# get the word list and shuffle it
+data = pd.read_csv("word_list.csv")
+words = data['words'].tolist()
+random.shuffle(words)
 
+# ------------- CODE FOR TIMER ------------
 PREPARE_TIME = 5
 TYPE_TIME = 60
 reps = 0
@@ -56,7 +60,7 @@ tittle_label.grid(column=1, row=0)
 
 canvas = Canvas(width=100, height=100, highlightthickness=0)
 timer_text = canvas.create_text(
-    50, 50, text="00:00", fill='green', font=('sans-serif', 20, "bold"))
+    50, 30, text="00:00", fill='green', font=('sans-serif', 20, "bold"))
 canvas.grid(column=1, row=1)
 
 start_button = Button(text="Start", command=start_timer, highlightthickness=0)
@@ -65,6 +69,13 @@ start_button.grid(column=0, row=2)
 reset_button = Button(text="Reset", highlightthickness=0, command=reset_timer)
 reset_button.grid(column=2, row=2)
 
-# ------------- END OF TIMER ------------
+# ------------- SHOW WORDS ------------
+# Show the words in canvas
+word_text = Label(text=words, width=60, height=15)
+word_text.grid(column=1, row=3)
+
+# ------------ ACCEPT THE USER'S INPUT --------
+codigo = Entry(window, width=25)
+codigo.grid(column=1, row=4)
 
 window.mainloop()
